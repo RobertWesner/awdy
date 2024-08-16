@@ -1,0 +1,20 @@
+{
+    "name": "robertwesner/awdy",
+    "description": "Spice up your PHP-Scripts with unnecessary progress-bars!",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "RobertWesner\\AWDY\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "RobertWesner",
+            "email": "robert@wesner.io"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    }
+}
