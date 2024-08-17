@@ -2,9 +2,11 @@
 
 namespace RobertWesner\AWDY\Template\Templates;
 
+use RobertWesner\AWDY\AnsiEscape;
 use RobertWesner\AWDY\Template\Area;
 use RobertWesner\AWDY\Template\Border;
 use RobertWesner\AWDY\Template\Buffer;
+use RobertWesner\AWDY\Template\BufferLogger;
 use RobertWesner\AWDY\Template\Connection;
 use RobertWesner\AWDY\Template\Facing;
 use RobertWesner\AWDY\Template\TemplateInterface;
@@ -15,31 +17,29 @@ class DefaultTemplate implements TemplateInterface
     private Area $progressArea;
 
     private float $progress = 0;
-    private string $log = '';
+    private BufferLogger $logger;
 
     public function __construct()
     {
+        $this->logger = new BufferLogger();
+
         $this->logArea = Area::create(5, 3, -5, -10, function (Buffer $buffer) {
-            // TODO: scroll log area when overflowing :^)
-            foreach (explode(PHP_EOL, $this->log) as $i => $line) {
-                $buffer->draw(0, $i, $line);
-            }
+            $this->logger->renderTo($buffer);
         });
 
         $this->progressArea = Area::create(5, -6, -5, -4, function (Buffer $buffer) {
-            $buffer->draw(1, 0, '.');
-            $buffer->draw(2, 0, str_repeat('-',  $buffer->getWidth() - 4));
-            $buffer->draw($buffer->getWidth() - 2, 0, '.');
+            $buffer->draw(1, 0, '.', AnsiEscape::fg(8));
+            $buffer->draw(2, 0, str_repeat('-',  $buffer->getWidth() - 4), AnsiEscape::fg(8));
+            $buffer->draw($buffer->getWidth() - 2, 0, '.', AnsiEscape::fg(8));
+            $buffer->draw(1, 2, '\'', AnsiEscape::fg(8));
+            $buffer->draw(2, 2, str_repeat('-',  $buffer->getWidth() - 4), AnsiEscape::fg(8));
+            $buffer->draw($buffer->getWidth() - 2, 2, '\'', AnsiEscape::fg(8));
 
-            $buffer->draw(1, 1, '|');
+            $buffer->draw(1, 1, '|', AnsiEscape::fg(8));
             $progressBarWidth = $buffer->getWidth() - 4;
             $progress = $progressBarWidth * $this->progress;
-            $buffer->draw(2, 1, str_repeat('#', $progress));
-            $buffer->draw($buffer->getWidth() - 2, 1, '|');
-
-            $buffer->draw(1, 2, '\'');
-            $buffer->draw(2, 2, str_repeat('-',  $buffer->getWidth() - 4));
-            $buffer->draw($buffer->getWidth() - 2, 2, '\'');
+            $buffer->draw(2, 1, str_repeat(' ', $progress), AnsiEscape::bg(2));
+            $buffer->draw($buffer->getWidth() - 2, 1, '|', AnsiEscape::fg(8));
         });
     }
 
@@ -120,11 +120,11 @@ class DefaultTemplate implements TemplateInterface
 
     public function handleEcho(string $echo): void
     {
-        $this->log .= $echo . PHP_EOL;
+        $this->logger->append($echo);
         $this->logArea->dirty();
     }
 
-    public function handleProgress(float $progress): void
+    public function handleProgress(float $progress, int $current = 0, int $total = 0): void
     {
         $this->progress = $progress;
         $this->progressArea->dirty();

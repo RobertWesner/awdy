@@ -199,7 +199,12 @@ class Border
         $this->drawHorizontal($cornerWidth, 0, $width - $cornerWidth * 2, $buffer);
 
         // Bottom bar
-        $this->drawHorizontal($cornerWidth, $height - 3, $width - $cornerWidth * 2, $buffer);
+        $this->drawHorizontal(
+            $cornerWidth,
+            $height - count(explode(PHP_EOL, $this->horizontal)),
+            $width - $cornerWidth * 2,
+            $buffer,
+        );
 
         foreach ($this->connections as $connection) {
             $beginX = $this->absoluteCoordinate($connection->beginX, $width);
@@ -236,7 +241,7 @@ class Border
                     $buffer,
                 );
             } elseif ($connection->type === Connection::TYPE_VERTICAL) {
-
+                // TODO
             }
         }
 

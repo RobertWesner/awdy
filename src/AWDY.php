@@ -6,6 +6,9 @@ use RobertWesner\AWDY\Template\TemplateInterface;
 
 final class AWDY
 {
+    private static int $previousWidth = 0;
+    private static int $previousHeight = 0;
+
     private static TemplateInterface $template;
 
     private static function getWidth(): int
@@ -23,20 +26,24 @@ final class AWDY
         $width = self::getWidth();
         $height = self::getHeight();
 
-        foreach (self::$template->getAreas() as $area) {
+        if ($width !== self::$previousWidth || $height !== self::$previousHeight) {
+            echo self::$template->defineBorder()->getBuffer(self::getWidth(), self::getHeight());
             echo AnsiEscape::moveToBeginning();
+
+            self::$previousWidth = $width;
+            self::$previousHeight = $height;
+        }
+
+        foreach (self::$template->getAreas() as $area) {
             $area->render($width, $height);
+            echo AnsiEscape::resetColor();
+            echo AnsiEscape::moveToBeginning();
         }
     }
 
     public static function setUp(TemplateInterface $template): void
     {
         self::$template = $template;
-
-        // TODO: refresh border when resizing window
-        echo self::$template->defineBorder()->getBuffer(self::getWidth(), self::getHeight());
-        echo AnsiEscape::moveToBeginning();
-
         self::render();
     }
 
@@ -49,7 +56,7 @@ final class AWDY
         self::render();
     }
 
-    public static function sprintf(string $string, mixed ...$args): void
+    public static function printf(string $string, mixed ...$args): void
     {
         self::echo(sprintf($string, ...$args));
     }
@@ -57,9 +64,9 @@ final class AWDY
     /**
      * @param float $progress Progress from 0 to 1
      */
-    public static function progress(float $progress): void
+    public static function progress(float $progress, int $current = 0, int $total = 0): void
     {
-        self::$template->handleProgress($progress);
+        self::$template->handleProgress($progress, $current, $total);
         self::render();
     }
 }

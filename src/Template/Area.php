@@ -24,10 +24,10 @@ class Area
     ) {
     }
 
-    public function render(int $screenWidth, int $screenHeight): Buffer
+    public function render(int $screenWidth, int $screenHeight): void
     {
         if (!$this->dirty) {
-            return new Buffer(0, 0);
+            return;
         }
 
         $this->dirty = false;
@@ -50,8 +50,6 @@ class Area
 
             $y++;
         }
-
-        return $buffer;
     }
 
     /**

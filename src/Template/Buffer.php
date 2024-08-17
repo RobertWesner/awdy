@@ -2,12 +2,14 @@
 
 namespace RobertWesner\AWDY\Template;
 
+use RobertWesner\AWDY\AnsiEscape;
+
 final class Buffer
 {
     use AbsoluteCoordinateTrait;
 
-    // TODO: $buffer as 2d array with each character being ['someansiescapesequence', 'X']
     private string $buffer;
+    private array $ansiEscapes = [];
 
     public function __construct(
         private int $width,
@@ -26,8 +28,16 @@ final class Buffer
         return $this->height;
     }
 
-    public function draw(int $x, int $y, string $text): void
+    public function draw(int $x, int $y, string $text, ?string $ansiEscape = null): void
     {
+        if (!isset($this->ansiEscapes[$y])) {
+            $this->ansiEscapes[$y] = [];
+        }
+        if ($ansiEscape !== null) {
+            $this->ansiEscapes[$y][$x] = AnsiEscape::resetColor() . $ansiEscape;
+            $this->ansiEscapes[$y][$x + strlen($text)] = AnsiEscape::resetColor();
+        }
+
         $this->buffer = substr_replace(
             $this->buffer,
             $text,
@@ -38,6 +48,19 @@ final class Buffer
 
     public function __toString()
     {
-        return $this->buffer;
+        $buffer = $this->buffer;
+        $escapes = $this->ansiEscapes;
+
+        krsort($escapes);
+
+        foreach ($escapes as $y => $escapeLine) {
+            krsort($escapeLine);
+
+            foreach ($escapeLine as $x => $escape) {
+                $buffer = substr_replace($buffer, $escape, $y * ($this->width + 1) + $x, 0);
+            }
+        }
+
+        return $buffer;
     }
 }

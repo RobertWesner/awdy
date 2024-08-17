@@ -16,5 +16,5 @@ interface TemplateInterface
     /**
      * @param float $progress 0 - 1
      */
-    public function handleProgress(float $progress): void;
+    public function handleProgress(float $progress, int $current = 0, int $total = 0): void;
 }
