@@ -23,27 +23,27 @@ class DefaultTemplate implements TemplateInterface
     {
         $this->logger = new BufferLogger();
 
-        $this->logArea = Area::create(5, 3, -5, -10, function (Buffer $buffer) {
+        $this->logArea = Area::create(5, 3, -6, -10, function (Buffer $buffer) {
             $this->logger->renderTo($buffer);
         });
 
-        $this->progressArea = Area::create(5, -6, -5, -4, function (Buffer $buffer) {
+        $this->progressArea = Area::create(5, -6, -6, -4, function (Buffer $buffer) {
             $buffer->draw(1, 0, '.', AnsiEscape::fg(8));
             $buffer->draw(2, 0, str_repeat('-',  $buffer->getWidth() - 4), AnsiEscape::fg(8));
-            $buffer->draw($buffer->getWidth() - 2, 0, '.', AnsiEscape::fg(8));
+            $buffer->draw(-2, 0, '.', AnsiEscape::fg(8));
             $buffer->draw(1, 2, '\'', AnsiEscape::fg(8));
             $buffer->draw(2, 2, str_repeat('-',  $buffer->getWidth() - 4), AnsiEscape::fg(8));
-            $buffer->draw($buffer->getWidth() - 2, 2, '\'', AnsiEscape::fg(8));
+            $buffer->draw(-2, 2, '\'', AnsiEscape::fg(8));
 
             $buffer->draw(1, 1, '|', AnsiEscape::fg(8));
             $progressBarWidth = $buffer->getWidth() - 4;
             $progress = $progressBarWidth * $this->progress;
             $buffer->draw(2, 1, str_repeat(' ', $progress), AnsiEscape::bg(2));
-            $buffer->draw($buffer->getWidth() - 2, 1, '|', AnsiEscape::fg(8));
+            $buffer->draw(-2, 1, '|', AnsiEscape::fg(8));
         });
     }
 
-    public function defineBorder(): Border
+    public function getBorder(): Border
     {
         return Border::create()
             ->horizontal(<<<'EOF'

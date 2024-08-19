@@ -4,7 +4,7 @@ namespace RobertWesner\AWDY\Template;
 
 interface TemplateInterface
 {
-    public function defineBorder(): Border;
+    public function getBorder(): Border;
 
     /**
      * @return Area[]

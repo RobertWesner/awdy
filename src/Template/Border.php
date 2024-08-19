@@ -146,6 +146,8 @@ class Border
     {
         $buffer = new Buffer($width, $height);
 
+        // TODO: use multiline buffer drawing
+
         $lines = explode(PHP_EOL, $this->cornerTopLeft);
         $cornerHeightTop = count($lines);
         $cornerWidth = strlen($lines[0]);
@@ -168,16 +170,6 @@ class Border
         foreach ($lines as $i => $line) {
             $buffer->draw($width - strlen($line), $height - $linesCount + $i, $line);
         }
-
-//        $linesToDraw = $height - $cornerHeightTop - $cornerHeightBottom;
-//        $verticalLines = explode(PHP_EOL, $this->vertical);
-//        $verticalLinesCount = count($verticalLines);
-//        for ($i = 0; $i < $linesToDraw; $i++) {
-//            $line = $verticalLines[$i % $verticalLinesCount];
-//
-//            $buffer->draw(0, $i + $cornerHeightTop, $line);
-//            $buffer->draw($width - strlen($line), $i + $cornerHeightTop, $line);
-//        }
 
         // Left bar
         $this->drawVertical(

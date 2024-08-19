@@ -28,22 +28,76 @@ final class Buffer
         return $this->height;
     }
 
-    public function draw(int $x, int $y, string $text, ?string $ansiEscape = null): void
+    private function drawMultiline(int $x, int $y, string $text, ?string $ansiEscape = null, ?string $transparency = null): void
     {
+        foreach (explode(PHP_EOL, $text) as $i => $line) {
+            $this->draw($x, $y + $i, $line, $ansiEscape, $transparency);
+        }
+    }
+
+    /**
+     * Draw a string of characters to the Buffer.
+     */
+    public function draw(int $x, int $y, string $text, ?string $ansiEscape = null, ?string $transparency = null): void
+    {
+        $x = $this->absoluteCoordinate($x, $this->width);
+        $y = $this->absoluteCoordinate($y, $this->height);
+
+        if (strpos($text, PHP_EOL)) {
+            $this->drawMultiline($x, $y, $text, $ansiEscape, $transparency);
+
+            return;
+        }
+
         if (!isset($this->ansiEscapes[$y])) {
             $this->ansiEscapes[$y] = [];
         }
-        if ($ansiEscape !== null) {
-            $this->ansiEscapes[$y][$x] = AnsiEscape::resetColor() . $ansiEscape;
-            $this->ansiEscapes[$y][$x + strlen($text)] = AnsiEscape::resetColor();
-        }
 
-        $this->buffer = substr_replace(
-            $this->buffer,
-            $text,
-            $y * ($this->width + 1) + $x,
-            strlen($text),
-        );
+        if ($transparency === null) {
+            // Simple and efficient. Just replacing Text.
+            if ($ansiEscape !== null) {
+                $this->ansiEscapes[$y][$x] = AnsiEscape::resetColor() . $ansiEscape;
+                $this->ansiEscapes[$y][$x + strlen($text)] = AnsiEscape::resetColor();
+            }
+
+            $this->buffer = substr_replace(
+                $this->buffer,
+                $text,
+                $y * ($this->width + 1) + $x,
+                strlen($text),
+            );
+        } else {
+            // Character by character, excluding the transparency
+            $i = 0;
+            foreach (str_split($text) as $character) {
+                if ($character === $transparency) {
+                    $i++;
+
+                    continue;
+                }
+
+                if ($ansiEscape !== null) {
+                    $this->ansiEscapes[$y][$x + $i] = AnsiEscape::resetColor() . $ansiEscape;
+                }
+
+                $this->buffer = substr_replace(
+                    $this->buffer,
+                    $character,
+                    $y * ($this->width + 1) + $x + $i,
+                    1,
+                );
+
+                $i++;
+            }
+
+            $xPos = $x + $i + 1;
+            $this->ansiEscapes[$y][$xPos] = AnsiEscape::resetColor() . ($this->ansiEscapes[$y][$xPos] ?? '');
+        }
+    }
+
+    public function debug(): void
+    {
+        $this->buffer = str_replace(' ', '#', $this->buffer);
     }
 
     public function __toString()

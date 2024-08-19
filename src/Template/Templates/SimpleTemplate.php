@@ -40,11 +40,11 @@ class SimpleTemplate implements TemplateInterface
             $progressBarWidth = $buffer->getWidth() - strlen($counter) - 2;
             $progress = $progressBarWidth * $this->progress;
             $buffer->draw(strlen($counter) + 2, 0, str_repeat('=', $progress) . ($this->progress < 1 ? '>' : ''));
-            $buffer->draw($buffer->getWidth(), 0, ']');
+            $buffer->draw(-1, 0, ']');
         });
     }
 
-    public function defineBorder(): Border
+    public function getBorder(): Border
     {
         return Border::create()
             ->horizontal('-')

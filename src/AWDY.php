@@ -27,7 +27,7 @@ final class AWDY
         $height = self::getHeight();
 
         if ($width !== self::$previousWidth || $height !== self::$previousHeight) {
-            echo self::$template->defineBorder()->getBuffer(self::getWidth(), self::getHeight());
+            echo self::$template->getBorder()->getBuffer(self::getWidth(), self::getHeight());
             echo AnsiEscape::moveToBeginning();
 
             self::$previousWidth = $width;
