@@ -3,7 +3,7 @@
 namespace RobertWesner\AWDY\Template;
 
 /**
- * Enums are PHP8.1, I want to support 8.0
+ * TODO: refactor to enum?
  */
 class Facing
 {
