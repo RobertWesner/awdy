@@ -11,7 +11,47 @@ AWDY
 
 Are We Done Yet? Spice up your PHP-scripts with progress-bars and more!
 
-> Very WIP at the moment, will be a composer package at some point
+## Installation
+
+```bash
+composer require robertwesner/awdy @dev
+```
+
+## Use
+
+```php
+<?php
+
+use RobertWesner\AWDY\AWDY;
+use RobertWesner\AWDY\Template\Templates\SimpleTemplate;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+const LIMIT = 1337;
+const PROGRESS_AFTER = 100;
+
+# Set up AWDY with a simple template
+AWDY::setUp(new SimpleTemplate());
+
+$i = 0;
+while (true) {
+    if ($i >= LIMIT) {
+        break;
+    }
+
+    if (($i % 77) === 0) {
+        # print to the logging section
+        AWDY::printf('%d is your lucky number!' . PHP_EOL, $i);
+    }
+
+    $i++;
+
+    if ($i >= LIMIT || ($i % PROGRESS_AFTER) === 0) {
+        # update the progress (floating point number 0 to 1)
+        AWDY::progress($i / LIMIT);
+    }
+}
+```
 
 ## Demo
 
