@@ -29,10 +29,10 @@ class DefaultTemplate implements TemplateInterface
 
         $this->progressArea = Area::create(5, -6, -6, -4, function (Buffer $buffer) {
             $buffer->draw(1, 0, '.', AnsiEscape::fg(8));
-            $buffer->draw(2, 0, str_repeat('-',  $buffer->getWidth() - 4), AnsiEscape::fg(8));
+            $buffer->draw(2, 0, str_repeat('-', $buffer->getWidth() - 4), AnsiEscape::fg(8));
             $buffer->draw(-2, 0, '.', AnsiEscape::fg(8));
             $buffer->draw(1, 2, '\'', AnsiEscape::fg(8));
-            $buffer->draw(2, 2, str_repeat('-',  $buffer->getWidth() - 4), AnsiEscape::fg(8));
+            $buffer->draw(2, 2, str_repeat('-', $buffer->getWidth() - 4), AnsiEscape::fg(8));
             $buffer->draw(-2, 2, '\'', AnsiEscape::fg(8));
 
             $buffer->draw(1, 1, '|', AnsiEscape::fg(8));

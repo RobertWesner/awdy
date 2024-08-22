@@ -35,8 +35,10 @@ class Area
 
         $this->dirty = false;
 
-        $width = $this->absoluteCoordinate($this->x2, $screenWidth) - $this->absoluteCoordinate($this->x1, $screenWidth) + 1;
-        $height = $this->absoluteCoordinate($this->y2, $screenHeight) - $this->absoluteCoordinate($this->y1, $screenHeight) + 1;
+        $width = $this->absoluteCoordinate($this->x2, $screenWidth)
+            - $this->absoluteCoordinate($this->x1, $screenWidth) + 1;
+        $height = $this->absoluteCoordinate($this->y2, $screenHeight)
+            - $this->absoluteCoordinate($this->y1, $screenHeight) + 1;
 
         // TODO: huh?
         if ($height === 0) {

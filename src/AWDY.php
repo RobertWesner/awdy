@@ -6,6 +6,8 @@ use RobertWesner\AWDY\Template\TemplateInterface;
 
 final class AWDY
 {
+    private static ?int $fixedWidth = null;
+    private static ?int $fixedHeight = null;
     private static int $previousWidth = 0;
     private static int $previousHeight = 0;
 
@@ -13,12 +15,12 @@ final class AWDY
 
     private static function getWidth(): int
     {
-        return (int)exec('tput cols');
+        return self::$fixedWidth ?? (int)exec('tput cols');
     }
 
     private static function getHeight(): int
     {
-        return (int)exec('tput lines');
+        return self::$fixedHeight ?? (int)exec('tput lines');
     }
 
     private static function render(): void
@@ -41,9 +43,15 @@ final class AWDY
         }
     }
 
-    public static function setUp(TemplateInterface $template): void
+    public static function setUp(TemplateInterface $template, ?int $width = null, ?int $height = null): void
     {
         self::$template = $template;
+        self::$fixedWidth = $width;
+        self::$fixedHeight = $height;
+
+        echo AnsiEscape::clear();
+        echo AnsiEscape::moveToBeginning();
+
         self::render();
     }
 

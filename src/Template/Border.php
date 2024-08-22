@@ -110,7 +110,7 @@ class Border
 
         return $this;
     }
-    
+
     public function corners(string $topLeft, string $topRight, string $bottomLeft, string $bottomRight): static
     {
         $this->cornerTopLeft = $topLeft;
@@ -233,7 +233,8 @@ class Border
                     $buffer,
                 );
             } elseif ($connection->type === Connection::TYPE_VERTICAL) {
-                // TODO
+                // TODO: implement vertical connections
+                die('Vertical Connections are not implemented yet.');
             }
         }
 

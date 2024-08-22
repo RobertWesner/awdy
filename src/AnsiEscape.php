@@ -9,6 +9,11 @@ final class AnsiEscape
 {
     private const SEQUENCE = "\33[";
 
+    public static function clear(): string
+    {
+        return self::SEQUENCE . '2J';
+    }
+
     public static function moveToBeginning(): string
     {
         return self::SEQUENCE . 'H';

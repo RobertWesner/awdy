@@ -23,7 +23,7 @@ while (true) {
         AWDY::printf('%d is your lucky number!' . PHP_EOL, $i);
     }
 
-   $i++;
+    $i++;
 
     if ($i >= LIMIT || ($i % PROGRESS_AFTER) === 0) {
         AWDY::progress($i / LIMIT);

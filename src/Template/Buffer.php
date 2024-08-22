@@ -28,8 +28,13 @@ final class Buffer
         return $this->height;
     }
 
-    private function drawMultiline(int $x, int $y, string $text, ?string $ansiEscape = null, ?string $transparency = null): void
-    {
+    private function drawMultiline(
+        int $x,
+        int $y,
+        string $text,
+        ?string $ansiEscape = null,
+        ?string $transparency = null,
+    ): void {
         foreach (explode(PHP_EOL, $text) as $i => $line) {
             $this->draw($x, $y + $i, $line, $ansiEscape, $transparency);
         }
@@ -40,6 +45,8 @@ final class Buffer
      */
     public function draw(int $x, int $y, string $text, ?string $ansiEscape = null, ?string $transparency = null): void
     {
+        // TODO: clip overflow! right now it breaks everything
+
         $x = $this->absoluteCoordinate($x, $this->width);
         $y = $this->absoluteCoordinate($y, $this->height);
 

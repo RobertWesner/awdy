@@ -1,14 +1,13 @@
 <?php
 
 use RobertWesner\AWDY\AWDY;
-use RobertWesner\AWDY\Template\Templates\DefaultTemplate;
+use RobertWesner\AWDY\Template\Templates\SimpleTemplate;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 const LIMIT = 1337;
-const PROGRESS_AFTER = 100;
 
-AWDY::setUp(new DefaultTemplate());
+AWDY::setUp(new SimpleTemplate(), 62, 16);
 
 $i = 0;
 while (true) {
@@ -24,7 +23,5 @@ while (true) {
 
     $i++;
 
-    if ($i >= LIMIT || ($i % PROGRESS_AFTER) === 0) {
-        AWDY::progress($i / LIMIT);
-    }
+    AWDY::progress($i / LIMIT);
 }

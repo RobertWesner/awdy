@@ -4,8 +4,8 @@ namespace RobertWesner\AWDY\Template;
 
 class Connection
 {
-    const TYPE_HORIZONTAL = 'horizontal';
-    const TYPE_VERTICAL = 'vertical';
+    public const TYPE_HORIZONTAL = 'horizontal';
+    public const TYPE_VERTICAL = 'vertical';
 
     public int $beginX;
     public int $beginY;

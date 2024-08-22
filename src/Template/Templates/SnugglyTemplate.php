@@ -8,7 +8,7 @@ use RobertWesner\AWDY\Template\Buffer;
 
 class SnugglyTemplate extends AbstractCanvasTemplate
 {
-    const SNUGGLY_SPRITES = [<<<'EOF'
+    public const SNUGGLY_SPRITES = [<<<'EOF'
     #_##############
     | |#######/\/\##
     \ \______/ . .\#
@@ -57,8 +57,8 @@ class SnugglyTemplate extends AbstractCanvasTemplate
     #| |_____| | |##
     #|_|_|###|_|_|##
     EOF];
-    
-    const STREET_SPRITE = <<<'EOF'
+
+    public const STREET_SPRITE = <<<'EOF'
     -
      
      
@@ -70,7 +70,7 @@ class SnugglyTemplate extends AbstractCanvasTemplate
     public function __construct(
         private string $snugglyColor = '',
     ) {
-       parent::__construct();
+        parent::__construct();
     }
 
     protected function getCanvasDimensions(): array
@@ -139,7 +139,7 @@ class SnugglyTemplate extends AbstractCanvasTemplate
         $snugglyX = $this->progress * ($buffer->getWidth() - strpos($snugglySprite, PHP_EOL));
 
         for ($i = 0; $i < $buffer->getWidth(); $i++) {
-           $buffer->draw($i, -6, self::STREET_SPRITE, AnsiEscape::bg(16));
+            $buffer->draw($i, -6, self::STREET_SPRITE, AnsiEscape::bg(16));
         }
 
         $buffer->draw(

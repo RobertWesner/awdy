@@ -7,9 +7,9 @@ namespace RobertWesner\AWDY\Template;
  */
 class Facing
 {
-    const LEFT = 'left';
-    const RIGHT = 'right';
-    const TOP = 'top';
-    const BOTTOM = 'bottom';
-    const ALL = 'all';
+    public const LEFT = 'left';
+    public const RIGHT = 'right';
+    public const TOP = 'top';
+    public const BOTTOM = 'bottom';
+    public const ALL = 'all';
 }
