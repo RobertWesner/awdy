@@ -1,24 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY\Template;
+
+use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
 
 class Border
 {
     use AbsoluteCoordinateTrait;
 
-    private string $horizontal;
-    private string $vertical;
+    private string $horizontal = ' ';
+    private string $vertical = ' ';
 
-    private string $cornerTopLeft;
-    private string $cornerTopRight;
-    private string $cornerBottomLeft;
-    private string $cornerBottomRight;
+    private string $cornerTopLeft = ' ';
+    private string $cornerTopRight = ' ';
+    private string $cornerBottomLeft = ' ';
+    private string $cornerBottomRight = ' ';
 
-    private string $connectFacingLeft;
-    private string $connectFacingRight;
-    private string $connectFacingTop;
-    private string $connectFacingBottom;
-    private string $connectFacingAll;
+    private string $connectFacingLeft = ' ';
+    private string $connectFacingRight = ' ';
+    private string $connectFacingTop = ' ';
+    private string $connectFacingBottom = ' ';
+    private string $connectFacingAll = ' ';
 
     /**
      * @var Connection[]
@@ -97,6 +101,7 @@ class Border
         return strlen(explode(PHP_EOL, $string, 2)[0]);
     }
 
+    #[CodeCoverageIgnore]
     public function horizontal(string $horizontal): static
     {
         $this->horizontal = $horizontal;
@@ -104,6 +109,7 @@ class Border
         return $this;
     }
 
+    #[CodeCoverageIgnore]
     public function vertical(string $vertical): static
     {
         $this->vertical = $vertical;
@@ -111,6 +117,7 @@ class Border
         return $this;
     }
 
+    #[CodeCoverageIgnore]
     public function corners(string $topLeft, string $topRight, string $bottomLeft, string $bottomRight): static
     {
         $this->cornerTopLeft = $topLeft;
@@ -135,6 +142,7 @@ class Border
     /**
      * @param Connection[] $connections
      */
+    #[CodeCoverageIgnore]
     public function connections(array $connections): static
     {
         $this->connections = $connections;
@@ -145,8 +153,6 @@ class Border
     public function getBuffer(int $width, int $height): Buffer
     {
         $buffer = new Buffer($width, $height);
-
-        // TODO: use multiline buffer drawing
 
         $lines = explode(PHP_EOL, $this->cornerTopLeft);
         $cornerHeightTop = count($lines);
@@ -193,7 +199,7 @@ class Border
         // Bottom bar
         $this->drawHorizontal(
             $cornerWidth,
-            $height - count(explode(PHP_EOL, $this->horizontal)),
+            $height - substr_count($this->horizontal, PHP_EOL) - 1,
             $width - $cornerWidth * 2,
             $buffer,
         );
@@ -233,8 +239,12 @@ class Border
                     $buffer,
                 );
             } elseif ($connection->type === Connection::TYPE_VERTICAL) {
-                // TODO: implement vertical connections
-                die('Vertical Connections are not implemented yet.');
+                $this->drawVertical(
+                    $beginX,
+                    $beginY + substr_count($beginConnection, PHP_EOL) + 1,
+                    $endY - $beginY - substr_count($beginConnection, PHP_EOL) - 1,
+                    $buffer,
+                );
             }
         }
 

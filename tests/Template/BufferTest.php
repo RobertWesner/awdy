@@ -1,6 +1,6 @@
 <?php
 
-namespace RobertWesner\AWDY\Tests;
+namespace RobertWesner\AWDY\Tests\Template;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -47,6 +47,38 @@ final class BufferTest extends TestCase
                     $buffer->draw(-1, -1, 'D');
                 }
             ],
+            '5x3 buffer multiple characters' => [
+                <<<EOF
+                     
+                 :)  
+                     
+                EOF,
+                5,
+                3,
+                function (Buffer $buffer): void {
+                    $buffer->draw(1, 1, ':)');
+                }
+            ],
+            '10x5 draw multiline' => [
+                <<<EOF
+                          
+                 +^-^+    
+                 |. .|    
+                 | ^ |~   
+                 +---+    
+                          
+                EOF,
+                10,
+                6,
+                function (Buffer $buffer): void {
+                    $buffer->draw(1, 1, <<<EOF
+                    +^-^+
+                    |. .|
+                    | ^ |~
+                    +---+
+                    EOF);
+                }
+            ],
         ];
     }
 
@@ -60,4 +92,8 @@ final class BufferTest extends TestCase
         self::assertSame($bufferHeight, $buffer->getHeight());
         self::assertSame($expected, (string)$buffer);
     }
+
+    // TODO: test ansi escape injection
+
+    // TODO: create a test for buffer draw overflow (both x and y)
 }

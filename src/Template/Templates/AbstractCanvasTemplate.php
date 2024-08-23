@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY\Template\Templates;
 
 use RobertWesner\AWDY\Template\Area;

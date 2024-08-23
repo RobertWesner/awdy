@@ -30,7 +30,7 @@ require __DIR__ . '/../vendor/autoload.php';
 const LIMIT = 1337;
 const PROGRESS_AFTER = 100;
 
-# Set up AWDY with a simple template
+// Set up AWDY with a simple template
 AWDY::setUp(new SimpleTemplate());
 
 $i = 0;
@@ -40,14 +40,14 @@ while (true) {
     }
 
     if (($i % 77) === 0) {
-        # print to the logging section
+        // print to the logging section
         AWDY::printf('%d is your lucky number!' . PHP_EOL, $i);
     }
 
     $i++;
 
     if ($i >= LIMIT || ($i % PROGRESS_AFTER) === 0) {
-        # update the progress (floating point number 0 to 1)
+        // update the progress (floating point number 0 to 1)
         AWDY::progress($i / LIMIT);
     }
 }

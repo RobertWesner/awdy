@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY\Template\Templates;
 
 use RobertWesner\AWDY\AnsiEscape;
@@ -65,10 +67,10 @@ class SnugglyTemplate extends AbstractCanvasTemplate
     _
     EOF;
 
-    private $snugglyCurrentSprite = 0;
+    private int $snugglyCurrentSprite = 0;
 
     public function __construct(
-        private string $snugglyColor = '',
+        private readonly string $snugglyColor = '',
     ) {
         parent::__construct();
     }
@@ -143,7 +145,7 @@ class SnugglyTemplate extends AbstractCanvasTemplate
         }
 
         $buffer->draw(
-            $snugglyX,
+            (int)$snugglyX,
             -10,
             $snugglySprite,
             ansiEscape: $this->snugglyColor,
