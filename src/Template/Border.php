@@ -146,8 +146,6 @@ class Border
     {
         $buffer = new Buffer($width, $height);
 
-        // TODO: use multiline buffer drawing
-
         $lines = explode(PHP_EOL, $this->cornerTopLeft);
         $cornerHeightTop = count($lines);
         $cornerWidth = strlen($lines[0]);

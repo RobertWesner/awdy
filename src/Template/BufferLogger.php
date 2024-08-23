@@ -14,7 +14,7 @@ class BufferLogger
     public function renderTo(Buffer $buffer): void
     {
         $lines = [];
-        foreach (explode(PHP_EOL, rtrim($this->log, PHP_EOL)) as $i => $line) {
+        foreach (explode(PHP_EOL, rtrim($this->log, PHP_EOL)) as $line) {
             if (strlen($line) > $buffer->getWidth()) {
                 foreach (str_split($line, $buffer->getWidth()) as $splitLine) {
                     $lines[] = $splitLine;
