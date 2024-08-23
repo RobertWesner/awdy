@@ -199,7 +199,7 @@ class Border
         // Bottom bar
         $this->drawHorizontal(
             $cornerWidth,
-            $height - count(explode(PHP_EOL, $this->horizontal)),
+            $height - substr_count($this->horizontal, PHP_EOL) - 1,
             $width - $cornerWidth * 2,
             $buffer,
         );
@@ -239,8 +239,12 @@ class Border
                     $buffer,
                 );
             } elseif ($connection->type === Connection::TYPE_VERTICAL) {
-                // TODO: implement vertical connections
-                die('Vertical Connections are not implemented yet.');
+                $this->drawVertical(
+                    $beginX,
+                    $beginY + substr_count($beginConnection, PHP_EOL) + 1,
+                    $endY - $beginY - substr_count($beginConnection, PHP_EOL) - 1,
+                    $buffer,
+                );
             }
         }
 

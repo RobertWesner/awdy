@@ -8,6 +8,8 @@ use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use RobertWesner\AWDY\Template\Border;
 use RobertWesner\AWDY\Template\Buffer;
+use RobertWesner\AWDY\Template\Connection;
+use RobertWesner\AWDY\Template\Facing;
 
 #[CoversClass(Border::class)]
 #[UsesClass(Buffer::class)]
@@ -131,6 +133,118 @@ final class BorderTest extends TestCase
                     )
                 // TODO: test connections
             ],
+            'connections' => [
+                <<<EOF
+                .------------------------------------------------------------------------------.
+                |                                                                              |
+                |   .---------------.   .--------------------------------------------------    |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   |               |   |                                                  |   |
+                |   '---------------'   '--------------------------------------------------'   |
+                |                                                                              |
+                |   .----------------------------------------------------------------------.   |
+                |   |                                                                      |   |
+                |   |                                                                      |   |
+                |   '----------------------------------------------------------------------'   |
+                |                                                                              |
+                '------------------------------------------------------------------------------'
+                EOF,
+                80,
+                40,
+                Border::create()
+                    ->horizontal(<<<EOF
+                    -
+                     
+                    -
+                    EOF)
+                    ->vertical(<<<EOF
+                    |   |
+                    EOF)
+                    ->corners(
+                        topLeft: <<<EOF
+                        .----
+                        |    
+                        |   .
+                        EOF,
+                        topRight: <<<EOF
+                        ----.
+                            |
+                            |
+                        EOF,
+                        bottomLeft: <<<EOF
+                        |   '
+                        |    
+                        '----
+                        EOF,
+                        bottomRight: <<<EOF
+                        '   |
+                            |
+                        ----'
+                        EOF,
+                    )
+                    ->connectFacing(
+                        left: <<<EOF
+                        '   |
+                            |
+                        .   |
+                        EOF,
+                        right: <<<EOF
+                        |   '
+                        |    
+                        |   .
+                        EOF,
+                        top: <<<EOF
+                        '   '
+                             
+                        -----
+                        EOF,
+                        bottom: <<<EOF
+                        -----
+                             
+                        .   .
+                        EOF,
+                        all: <<<EOF
+                        '   '
+                             
+                        .   .
+                        EOF,
+                    )
+                    ->connections([
+                        Connection::horizontal()
+                            ->begin(0, -8, Facing::RIGHT)
+                            ->end(-5, -8, Facing::LEFT),
+                        Connection::vertical()
+                            ->begin(20, 0, Facing::BOTTOM)
+                            ->end(20, -8, Facing::TOP),
+                    ])
+            ]
         ];
     }
 
