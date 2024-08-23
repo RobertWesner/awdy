@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY;
 
 use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
@@ -21,6 +23,11 @@ final class AnsiEscape
     public static function moveToBeginning(): string
     {
         return self::SEQUENCE . 'H';
+    }
+
+    public static function moveTo(int $x, int $y): string
+    {
+        return self::SEQUENCE . $y . ';' . $x . 'f';
     }
 
     public static function resetColor(): string

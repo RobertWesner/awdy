@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY\Template\Templates;
 
 use RobertWesner\AWDY\AnsiEscape;
@@ -38,7 +40,7 @@ class DefaultTemplate implements TemplateInterface
             $buffer->draw(1, 1, '|', AnsiEscape::fg(8));
             $progressBarWidth = $buffer->getWidth() - 4;
             $progress = $progressBarWidth * $this->progress;
-            $buffer->draw(2, 1, str_repeat(' ', $progress), AnsiEscape::bg(2));
+            $buffer->draw(2, 1, str_repeat(' ', (int)$progress), AnsiEscape::bg(2));
             $buffer->draw(-2, 1, '|', AnsiEscape::fg(8));
         });
     }

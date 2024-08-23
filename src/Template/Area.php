@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY\Template;
+
+use RobertWesner\AWDY\AnsiEscape;
 
 class Area
 {
@@ -13,8 +17,6 @@ class Area
     {
         return new static($x1, $y1, $x2, $y2, $onRender);
     }
-
-    private Buffer $buffer;
 
     private bool $dirty = true;
 
@@ -54,9 +56,8 @@ class Area
         }
         $x = $this->x1 + 1;
 
-        foreach (explode(PHP_EOL, $buffer) as $line) {
-            // TODO: use AnsiEscape
-            echo "\033[{$y};{$x}f", $line;
+        foreach (explode(PHP_EOL, (string)$buffer) as $line) {
+            echo AnsiEscape::moveTo($x, $y), $line;
 
             $y++;
         }

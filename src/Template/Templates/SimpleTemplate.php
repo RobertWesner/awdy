@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY\Template\Templates;
 
 use RobertWesner\AWDY\Template\Area;
@@ -31,7 +33,7 @@ class SimpleTemplate implements TemplateInterface
         $this->progressArea = Area::create(2, 1, -3, 1, function (Buffer $buffer) {
             $counter = '';
             if ($this->total !== 0) {
-                $counter = str_pad($this->current, strlen($this->total), ' ', STR_PAD_LEFT)
+                $counter = str_pad((string)$this->current, strlen((string)$this->total), ' ', STR_PAD_LEFT)
                     . '/' . $this->total;
                 $buffer->draw(0, 0, $counter);
             }
@@ -39,7 +41,7 @@ class SimpleTemplate implements TemplateInterface
             $buffer->draw(strlen($counter) + 1, 0, '[');
             $progressBarWidth = $buffer->getWidth() - strlen($counter) - 2;
             $progress = $progressBarWidth * $this->progress;
-            $buffer->draw(strlen($counter) + 2, 0, str_repeat('=', $progress) . ($this->progress < 1 ? '>' : ''));
+            $buffer->draw(strlen($counter) + 2, 0, str_repeat('=', (int)$progress) . ($this->progress < 1 ? '>' : ''));
             $buffer->draw(-1, 0, ']');
         });
     }

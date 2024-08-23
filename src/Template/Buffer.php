@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RobertWesner\AWDY\Template;
 
 use RobertWesner\AWDY\AnsiEscape;
@@ -12,8 +14,8 @@ final class Buffer
     private array $ansiEscapes = [];
 
     public function __construct(
-        private int $width,
-        private int $height,
+        private readonly int $width,
+        private readonly int $height,
     ) {
         $this->buffer = substr(str_repeat(str_repeat(' ', $width) . PHP_EOL, $height), 0, -1);
     }
