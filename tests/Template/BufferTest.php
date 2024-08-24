@@ -162,6 +162,50 @@ final class BufferTest extends BaseTestCase
                     EOF, transparency: '#');
                 }
             ],
+            // TODO: transparency with other characters
+            'out of bounds y' => [
+                <<<EOF
+                     
+                     
+                     
+                EOF,
+                5,
+                3,
+                function (Buffer $buffer): void {
+                    $buffer->draw(0, 3, 'hidden');
+                }
+            ],
+            'out of bounds x' => [
+                <<<EOF
+                  cli
+                     
+                     
+                EOF,
+                5,
+                3,
+                function (Buffer $buffer): void {
+                    $buffer->draw(2, 0, 'clipped');
+                }
+            ],
+            'out of bounds multiline' => [
+                <<<EOF
+                     
+                     
+                  Hey
+                  Thi
+                  Sho
+                EOF,
+                5,
+                5,
+                function (Buffer $buffer): void {
+                    $buffer->draw(2, 2, <<<EOF
+                    Heyo
+                    This
+                    Should
+                    Clip
+                    EOF);
+                }
+            ],
         ];
     }
 
@@ -196,6 +240,4 @@ final class BufferTest extends BaseTestCase
     }
 
     // TODO: test ansi escape injection
-
-    // TODO: create a test for buffer draw overflow (both x and y)
 }

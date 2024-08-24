@@ -1,7 +1,5 @@
 <?php
 
-// TODO: set up file watcher or git hook
-
 declare(strict_types=1);
 
 use PhpCodeMinifier\MinifierFactory;

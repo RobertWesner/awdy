@@ -105,7 +105,7 @@ final class AnsiEscape
 
     public static function moveTo(int $x, int $y): string
     {
-        return self::SEQUENCE . $y . ';' . $x . 'f';
+        return self::SEQUENCE . $y + 1 . ';' . $x + 1 . 'f';
     }
 
     public static function resetColor(): string
@@ -182,22 +182,16 @@ class Area
         $height = $this->absoluteCoordinate($this->y2, $screenHeight)
             - $this->absoluteCoordinate($this->y1, $screenHeight) + 1;
 
-        // TODO: huh?
-        if ($height === 0) {
-            $height = 1;
-        }
-
         $buffer = new Buffer($width, $height);
         ($this->onRender)($buffer);
 
-        $y = $this->y1 + 1;
+        $y = $this->y1;
         if ($y < 0) {
             $y = $screenHeight + $y;
         }
-        $x = $this->x1 + 1;
 
         foreach (explode(PHP_EOL, (string)$buffer) as $line) {
-            echo AnsiEscape::moveTo($x, $y), $line;
+            echo AnsiEscape::moveTo($this->x1, $y), $line;
 
             $y++;
         }
@@ -522,6 +516,15 @@ final class Buffer
 
         if (!isset($this->ansiEscapes[$y])) {
             $this->ansiEscapes[$y] = [];
+        }
+
+        if ($y >= $this->height) {
+            // Out of bounds
+            return;
+        }
+
+        if ($x + strlen($text) > $this->width) {
+            $text = substr($text, 0, $this->width - $x);
         }
 
         if ($transparency === null) {
@@ -1218,7 +1221,7 @@ class SnugglyTemplate extends AbstractCanvasTemplate
         $this->snugglyCurrentSprite = ($this->snugglyCurrentSprite + 1) % count(self::SNUGGLY_SPRITES);
         $snugglySprite = self::SNUGGLY_SPRITES[$this->snugglyCurrentSprite];
 
-        $snugglyX = $this->progress * ($buffer->getWidth() - strpos($snugglySprite, PHP_EOL));
+        $snugglyX = $this->progress * ($buffer->getWidth() - strpos($snugglySprite, PHP_EOL) + 1);
 
         for ($i = 0; $i < $buffer->getWidth(); $i++) {
             $buffer->draw($i, -6, self::STREET_SPRITE, AnsiEscape::bg(16));

@@ -31,12 +31,12 @@ final class AreaTest extends BaseTestCase
         self::assertSame(
             sprintf(
                 '%sA        B%s Hello    %s          %s          %s          %sC        D',
-                AnsiEscape::moveTo(6, 3),
-                AnsiEscape::moveTo(6, 4),
-                AnsiEscape::moveTo(6, 5),
-                AnsiEscape::moveTo(6, 6),
-                AnsiEscape::moveTo(6, 7),
-                AnsiEscape::moveTo(6, 8),
+                AnsiEscape::moveTo(5, 2),
+                AnsiEscape::moveTo(5, 3),
+                AnsiEscape::moveTo(5, 4),
+                AnsiEscape::moveTo(5, 5),
+                AnsiEscape::moveTo(5, 6),
+                AnsiEscape::moveTo(5, 7),
             ),
             ob_get_clean(),
         );
@@ -54,12 +54,32 @@ final class AreaTest extends BaseTestCase
         self::assertSame(
             sprintf(
                 '%sA        B%s World    %s          %s          %s          %sC        D',
-                AnsiEscape::moveTo(6, 3),
-                AnsiEscape::moveTo(6, 4),
-                AnsiEscape::moveTo(6, 5),
-                AnsiEscape::moveTo(6, 6),
-                AnsiEscape::moveTo(6, 7),
-                AnsiEscape::moveTo(6, 8),
+                AnsiEscape::moveTo(5, 2),
+                AnsiEscape::moveTo(5, 3),
+                AnsiEscape::moveTo(5, 4),
+                AnsiEscape::moveTo(5, 5),
+                AnsiEscape::moveTo(5, 6),
+                AnsiEscape::moveTo(5, 7),
+            ),
+            ob_get_clean(),
+        );
+    }
+
+    public function testOneLine(): void
+    {
+        $area = Area::create(0, 0, -1, 0, function (Buffer $buffer) {
+            $buffer->draw(0, 0, 'A');
+            $buffer->draw(-1, 0, 'B');
+            $buffer->draw(0, -1, 'C');
+            $buffer->draw(-1, -1, 'D');
+        });
+
+        ob_start();
+        $area->render(30, 1);
+        self::assertSame(
+            sprintf(
+                '%sC                            D',
+                AnsiEscape::moveTo(0, 0),
             ),
             ob_get_clean(),
         );
