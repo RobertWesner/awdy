@@ -11,11 +11,11 @@ use RobertWesner\AWDY\Template\Border;
 use RobertWesner\AWDY\Template\Buffer;
 use RobertWesner\AWDY\Template\Connection;
 use RobertWesner\AWDY\Template\Facing;
-use RobertWesner\AWDY\Tests\BaseTest;
+use RobertWesner\AWDY\Tests\BaseTestCase;
 
 #[CoversClass(Border::class)]
 #[UsesClass(Buffer::class)]
-final class BorderTest extends BaseTest
+final class BorderTestCase extends BaseTestCase
 {
     public static function dataProvider(): array
     {

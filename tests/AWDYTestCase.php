@@ -18,7 +18,7 @@ use RobertWesner\AWDY\Template\Templates\SimpleTemplate;
 #[UsesClass(Buffer::class)]
 #[UsesClass(BufferLogger::class)]
 #[UsesClass(Connection::class)]
-final class AWDYTest extends BaseTest
+final class AWDYTestCase extends BaseTestCase
 {
     public function test(): void
     {

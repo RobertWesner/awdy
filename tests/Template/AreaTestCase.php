@@ -7,11 +7,11 @@ use PHPUnit\Framework\Attributes\UsesClass;
 use RobertWesner\AWDY\AnsiEscape;
 use RobertWesner\AWDY\Template\Area;
 use RobertWesner\AWDY\Template\Buffer;
-use RobertWesner\AWDY\Tests\BaseTest;
+use RobertWesner\AWDY\Tests\BaseTestCase;
 
 #[CoversClass(Area::class)]
 #[UsesClass(Buffer::class)]
-final class AreaTest extends BaseTest
+final class AreaTestCase extends BaseTestCase
 {
     private string $changingValue = 'Hello';
 

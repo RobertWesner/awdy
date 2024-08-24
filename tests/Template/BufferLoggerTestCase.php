@@ -9,12 +9,12 @@ use PHPUnit\Framework\Attributes\UsesClass;
 use RobertWesner\AWDY\Template\AbsoluteCoordinateTrait;
 use RobertWesner\AWDY\Template\Buffer;
 use RobertWesner\AWDY\Template\BufferLogger;
-use RobertWesner\AWDY\Tests\BaseTest;
+use RobertWesner\AWDY\Tests\BaseTestCase;
 
 #[CoversClass(BufferLogger::class)]
 #[UsesClass(AbsoluteCoordinateTrait::class)]
 #[UsesClass(Buffer::class)]
-final class BufferLoggerTest extends BaseTest
+final class BufferLoggerTestCase extends BaseTestCase
 {
     private function getRendered(BufferLogger $logger): string
     {

@@ -7,10 +7,10 @@ namespace RobertWesner\AWDY\Tests\Template;
 use PHPUnit\Framework\Attributes\CoversClass;
 use RobertWesner\AWDY\Template\Connection;
 use RobertWesner\AWDY\Template\Facing;
-use RobertWesner\AWDY\Tests\BaseTest;
+use RobertWesner\AWDY\Tests\BaseTestCase;
 
 #[CoversClass(Connection::class)]
-final class ConnectionTest extends BaseTest
+final class ConnectionTestCase extends BaseTestCase
 {
     public function test(): void
     {
