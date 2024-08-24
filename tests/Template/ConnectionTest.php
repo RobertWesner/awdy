@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace RobertWesner\AWDY\Tests\Template;
 
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\TestCase;
 use RobertWesner\AWDY\Template\Connection;
 use RobertWesner\AWDY\Template\Facing;
+use RobertWesner\AWDY\Tests\BaseTest;
 
 #[CoversClass(Connection::class)]
-class ConnectionTest extends TestCase
+final class ConnectionTest extends BaseTest
 {
     public function test(): void
     {

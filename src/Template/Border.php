@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace RobertWesner\AWDY\Template;
 
-use PHPUnit\Framework\Attributes\CodeCoverageIgnore;
+// TODO: allow ansi escapes for border parts
 
 class Border
 {
@@ -101,7 +101,6 @@ class Border
         return strlen(explode(PHP_EOL, $string, 2)[0]);
     }
 
-    #[CodeCoverageIgnore]
     public function horizontal(string $horizontal): static
     {
         $this->horizontal = $horizontal;
@@ -109,7 +108,6 @@ class Border
         return $this;
     }
 
-    #[CodeCoverageIgnore]
     public function vertical(string $vertical): static
     {
         $this->vertical = $vertical;
@@ -117,7 +115,6 @@ class Border
         return $this;
     }
 
-    #[CodeCoverageIgnore]
     public function corners(string $topLeft, string $topRight, string $bottomLeft, string $bottomRight): static
     {
         $this->cornerTopLeft = $topLeft;
@@ -141,8 +138,9 @@ class Border
 
     /**
      * @param Connection[] $connections
+     *
+     * @codeCoverageIgnore
      */
-    #[CodeCoverageIgnore]
     public function connections(array $connections): static
     {
         $this->connections = $connections;

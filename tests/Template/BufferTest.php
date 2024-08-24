@@ -6,11 +6,11 @@ namespace RobertWesner\AWDY\Tests\Template;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 use RobertWesner\AWDY\Template\Buffer;
+use RobertWesner\AWDY\Tests\BaseTest;
 
 #[CoversClass(Buffer::class)]
-final class BufferTest extends TestCase
+final class BufferTest extends BaseTest
 {
     public static function drawDataProvider(): array
     {
@@ -93,6 +93,106 @@ final class BufferTest extends TestCase
         self::assertSame($bufferWidth, $buffer->getWidth());
         self::assertSame($bufferHeight, $buffer->getHeight());
         self::assertSame($expected, (string)$buffer);
+    }
+
+    public static function drawTransparencyDataProvider(): array
+    {
+        return [
+            '10x8 buffer' => [
+                <<<EOF
+                X X X X X 
+                 X X X X X
+                X X.---.X 
+                 X| . . |X
+                X |  v  | 
+                 X '---' X
+                X X X X X 
+                 X X X X X
+                EOF,
+                10,
+                8,
+                function (Buffer $buffer): void {
+                    for ($x = 0; $x < 5; $x++) {
+                        for ($y = 0; $y < 8; $y++) {
+                            $buffer->draw($x * 2 + $y % 2, $y, 'X');
+                        }
+                    }
+
+                    $buffer->draw(2, 2, <<<EOF
+                    #.---.#
+                    | . . |
+                    |  v  |
+                    #'---'#
+                    EOF, transparency: '#');
+                }
+            ],
+            '10x8 transparent center' => [
+                <<<EOF
+                .'.'.'.'.'.'.'.'.'.'
+                '.'.'.'.'.'.'.'.'.'.
+                .'.'.'.'.'.'.'.'.'.'
+                '.'.'.'.'.'.'.'.'.'.
+                .'..----------.'.'.'
+                '.'|  .----.  |.'.'.
+                .'.|  |'.'.|  |'.'.'
+                '.'|  |.'.'|  |.'.'.
+                .'.|  '----'  |'.'.'
+                '.''----------'.'.'.
+                .'.'.'.'.'.'.'.'.'.'
+                '.'.'.'.'.'.'.'.'.'.
+                .'.'.'.'.'.'.'.'.'.'
+                '.'.'.'.'.'.'.'.'.'.
+                EOF,
+                20,
+                14,
+                function (Buffer $buffer): void {
+                    for ($x = 0; $x < 20; $x++) {
+                        for ($y = 0; $y < 14; $y++) {
+                            $buffer->draw($x, $y, ['.', '\''][($x + $y) % 2]);
+                        }
+                    }
+
+                    $buffer->draw(3, 4, <<<EOF
+                    .----------.
+                    |  .----.  |
+                    |  |####|  |
+                    |  |####|  |
+                    |  '----'  |
+                    '----------'
+                    EOF, transparency: '#');
+                }
+            ],
+        ];
+    }
+
+    #[DataProvider('drawTransparencyDataProvider')]
+    public function testDrawTransparency(string $expected, int $bufferWidth, int $bufferHeight, callable $draw): void
+    {
+        $buffer = new Buffer($bufferWidth, $bufferHeight);
+        $draw($buffer);
+
+        self::assertSame($bufferWidth, $buffer->getWidth());
+        self::assertSame($bufferHeight, $buffer->getHeight());
+        self::assertSame($expected, $this->stripAnsiEscapes((string)$buffer));
+    }
+
+    public function testDebug(): void
+    {
+        $buffer = new Buffer(20, 10);
+        $buffer->debug();
+
+        self::assertSame(<<<EOF
+        ####################
+        ####################
+        ####################
+        ####################
+        ####################
+        ####################
+        ####################
+        ####################
+        ####################
+        ####################
+        EOF, (string)$buffer);
     }
 
     // TODO: test ansi escape injection
