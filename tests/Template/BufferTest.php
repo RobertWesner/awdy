@@ -7,10 +7,10 @@ namespace RobertWesner\AWDY\Tests\Template;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RobertWesner\AWDY\Template\Buffer;
-use RobertWesner\AWDY\Tests\BaseTest;
+use RobertWesner\AWDY\Tests\BaseTestCase;
 
 #[CoversClass(Buffer::class)]
-final class BufferTest extends BaseTest
+final class BufferTest extends BaseTestCase
 {
     public static function drawDataProvider(): array
     {

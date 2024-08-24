@@ -1,8 +1,12 @@
 name: tests
 
+# TODO: https://docs.github.com/en/actions/sharing-automations/reusing-workflows
+
 on:
+    push:
+        branches: [ 'main' ]
     pull_request:
-        types: [opened, reopened]
+        branches: [ 'main' ]
 
 permissions:
     contents: read
@@ -36,4 +40,19 @@ jobs:
                 run: composer install --prefer-dist --no-progress
 
             -   name: Run test suite
-                run: composer run-script test
+                run: pwd ; ls -la ; ls -la tests ; composer run-script test
+
+            -   name: Make code coverage badge
+                uses: timkrase/phpunit-coverage-badge@v1.2.1
+                with:
+                    coverage_badge_path: output/coverage.svg
+                    push_badge: false
+
+            -   name: Git push to image-data branch
+                uses: peaceiris/actions-gh-pages@v3
+                with:
+                    publish_dir: ./output
+                    publish_branch: image-data
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    user_name: 'github-actions[bot]'
+                    user_email: 'github-actions[bot]@users.noreply.github.com'
