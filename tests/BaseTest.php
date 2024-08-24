@@ -6,7 +6,7 @@ namespace RobertWesner\AWDY\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class BaseTest extends TestCase
+abstract class BaseTest extends TestCase
 {
     protected function stripAnsiEscapes(string $value): string
     {
