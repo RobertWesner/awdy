@@ -38,10 +38,15 @@ class SimpleTemplate implements TemplateInterface
                 $buffer->draw(0, 0, $counter);
             }
 
-            $buffer->draw(strlen($counter) + 1, 0, '[');
+            $progressX = 0;
+            if ($counter !== '') {
+                $progressX = strlen($counter) + 1;
+            }
+
+            $buffer->draw($progressX, 0, '[');
             $progressBarWidth = $buffer->getWidth() - strlen($counter) - 2;
             $progress = $progressBarWidth * $this->progress;
-            $buffer->draw(strlen($counter) + 2, 0, str_repeat('=', (int)$progress) . ($this->progress < 1 ? '>' : ''));
+            $buffer->draw($progressX + 1, 0, str_repeat('=', (int)$progress) . ($this->progress < 1 ? '>' : ''));
             $buffer->draw(-1, 0, ']');
         });
     }

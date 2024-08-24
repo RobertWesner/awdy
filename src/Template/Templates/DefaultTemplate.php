@@ -13,6 +13,8 @@ use RobertWesner\AWDY\Template\Connection;
 use RobertWesner\AWDY\Template\Facing;
 use RobertWesner\AWDY\Template\TemplateInterface;
 
+// TODO: rework this to something actually nice
+
 class DefaultTemplate implements TemplateInterface
 {
     private Area $logArea;
@@ -40,7 +42,12 @@ class DefaultTemplate implements TemplateInterface
             $buffer->draw(1, 1, '|', AnsiEscape::fg(8));
             $progressBarWidth = $buffer->getWidth() - 4;
             $progress = $progressBarWidth * $this->progress;
-            $buffer->draw(2, 1, str_repeat(' ', (int)$progress), AnsiEscape::bg(2));
+            $buffer->draw(
+                2,
+                1,
+                str_repeat('#', (int)$progress),
+                AnsiEscape::bg(2) . AnsiEscape::fg(2),
+            );
             $buffer->draw(-2, 1, '|', AnsiEscape::fg(8));
         });
     }
