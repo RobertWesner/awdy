@@ -62,6 +62,15 @@ final class Buffer
             $this->ansiEscapes[$y] = [];
         }
 
+        if ($y >= $this->height) {
+            // Out of bounds
+            return;
+        }
+
+        if ($x + strlen($text) > $this->width) {
+            $text = substr($text, 0, $this->width - $x);
+        }
+
         if ($transparency === null) {
             // Simple and efficient. Just replacing Text.
             if ($ansiEscape !== null) {

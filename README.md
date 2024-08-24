@@ -11,51 +11,79 @@ AWDY
 
 </div>
 
-Are We Done Yet? Spice up your PHP-scripts with progress-bars and more!
+<div align="center">
+
+<img src="readme/1.gif" width="300">
+
+**Are We Done Yet**? Spice up your PHP-scripts with progress-bars and more!
+
+</div>
 
 ## Installation
 
+### Composer (preferred)
+
 ```bash
-composer require robertwesner/awdy @dev
+composer require robertwesner/awdy "*"
+```
+
+### Single file download
+
+1) Download [/dist/AWDY.php](../../raw/main/dist/AWDY.php).
+2) Include the bundled file in your script:
+```php
+require __DIR__ . '/AWDY.php';
+```
+
+### Require from URL
+
+If you wish to not use composer or manually download a file, you can add following code to your script:
+
+```php
+$awdyPath = tempnam(sys_get_temp_dir(), 'awdy_');
+file_put_contents($awdyPath, fopen('https://raw.githubusercontent.com/RobertWesner/awdy/main/dist/AWDY.php', 'r'));
+require $awdyPath;
 ```
 
 ## Use
 
+More details avaiable in the [wiki page](https://github.com/RobertWesner/awdy/wiki/Using-AWDY).
+
+### At the beginning of your script
+
+Set up AWDY with your choice of template, optionally with a fixed width and height
 ```php
-<?php
-
-use RobertWesner\AWDY\AWDY;
-use RobertWesner\AWDY\Template\Templates\SimpleTemplate;
-
-require __DIR__ . '/../vendor/autoload.php';
-
-const LIMIT = 1337;
-const PROGRESS_AFTER = 100;
-
-// Set up AWDY with a simple template
+// Dynamic size takes the full shell window and reacts to size changes
 AWDY::setUp(new SimpleTemplate());
 
-$i = 0;
-while (true) {
-    if ($i >= LIMIT) {
-        break;
-    }
+// Fixed width 80 and height 32
+AWDY::setUp(new SimpleTemplate(), 80, 32);
+```
 
-    if (($i % 77) === 0) {
-        // print to the logging section
-        AWDY::printf('%d is your lucky number!' . PHP_EOL, $i);
-    }
+### Change progress
 
-    $i++;
+```php
+// Only as percentage
+AWDY::progress($i / $maxAmount);
 
-    if ($i >= LIMIT || ($i % PROGRESS_AFTER) === 0) {
-        // update the progress (floating point number 0 to 1)
-        AWDY::progress($i / LIMIT);
-    }
-}
+// Including current and maximum value
+AWDY::progress($i / $maxAmount, $i, $maxAmount);
+```
+
+### Append to log
+
+```php
+// Unformatted
+AWDY::echo("This is some simple informative text!\n");
+
+// Printf formatting
+AWDY::printf('You are %d steps away from your destiny! ', $myNumber);
 ```
 
 ## Templates
+
+If the pre-defined templates are not to your liking,
+take a look at [how to create your own](https://github.com/RobertWesner/awdy/wiki/Creating-Templates).
 
 ### JustProgress
 
@@ -90,10 +118,6 @@ while (true) {
 '----------------------------------------------------------'
 ```
 
-## Create your own template
-
-Templates are easy to create, have a look at the [official ones](src/Template/Templates).
-
 [//]: # (I should create a wiki page for templating)
 
 ## Demo
@@ -102,10 +126,10 @@ Templates are easy to create, have a look at the [official ones](src/Template/Te
 
 ![](readme/1.gif)
 
-### Adding some flair
+### Adding some color
 
 ![](readme/2.gif)
 
-### Always with dynamic size
+### Allows dynamic size
 
 ![](readme/3.gif)

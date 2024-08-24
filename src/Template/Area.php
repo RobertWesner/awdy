@@ -42,22 +42,16 @@ class Area
         $height = $this->absoluteCoordinate($this->y2, $screenHeight)
             - $this->absoluteCoordinate($this->y1, $screenHeight) + 1;
 
-        // TODO: huh?
-        if ($height === 0) {
-            $height = 1;
-        }
-
         $buffer = new Buffer($width, $height);
         ($this->onRender)($buffer);
 
-        $y = $this->y1 + 1;
+        $y = $this->y1;
         if ($y < 0) {
             $y = $screenHeight + $y;
         }
-        $x = $this->x1 + 1;
 
         foreach (explode(PHP_EOL, (string)$buffer) as $line) {
-            echo AnsiEscape::moveTo($x, $y), $line;
+            echo AnsiEscape::moveTo($this->x1, $y), $line;
 
             $y++;
         }

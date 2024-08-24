@@ -138,7 +138,7 @@ class SnugglyTemplate extends AbstractCanvasTemplate
         $this->snugglyCurrentSprite = ($this->snugglyCurrentSprite + 1) % count(self::SNUGGLY_SPRITES);
         $snugglySprite = self::SNUGGLY_SPRITES[$this->snugglyCurrentSprite];
 
-        $snugglyX = $this->progress * ($buffer->getWidth() - strpos($snugglySprite, PHP_EOL));
+        $snugglyX = $this->progress * ($buffer->getWidth() - strpos($snugglySprite, PHP_EOL) + 1);
 
         for ($i = 0; $i < $buffer->getWidth(); $i++) {
             $buffer->draw($i, -6, self::STREET_SPRITE, AnsiEscape::bg(16));

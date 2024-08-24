@@ -25,7 +25,7 @@ final class AnsiEscape
 
     public static function moveTo(int $x, int $y): string
     {
-        return self::SEQUENCE . $y . ';' . $x . 'f';
+        return self::SEQUENCE . $y + 1 . ';' . $x + 1 . 'f';
     }
 
     public static function resetColor(): string
