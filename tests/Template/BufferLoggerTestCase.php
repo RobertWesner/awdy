@@ -6,13 +6,14 @@ namespace RobertWesner\AWDY\Tests\Template;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
+use PHPUnit\Framework\Attributes\UsesTrait;
 use RobertWesner\AWDY\Template\AbsoluteCoordinateTrait;
 use RobertWesner\AWDY\Template\Buffer;
 use RobertWesner\AWDY\Template\BufferLogger;
 use RobertWesner\AWDY\Tests\BaseTestCase;
 
 #[CoversClass(BufferLogger::class)]
-#[UsesClass(AbsoluteCoordinateTrait::class)]
+#[UsesTrait(AbsoluteCoordinateTrait::class)]
 #[UsesClass(Buffer::class)]
 final class BufferLoggerTestCase extends BaseTestCase
 {
