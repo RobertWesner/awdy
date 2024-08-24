@@ -4,8 +4,9 @@ AWDY
 
 <div align="center">
 
-![coverage](https://raw.githubusercontent.com/RobertWesner/awdy/image-data/coverage.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../raw/main/LICENSE.txt)
+![](https://github.com/RobertWesner/awdy/actions/workflows/tests.yml/badge.svg)
+![](https://raw.githubusercontent.com/RobertWesner/awdy/image-data/coverage.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../../raw/main/LICENSE.txt)
 
 </div>
 
@@ -53,6 +54,47 @@ while (true) {
 }
 ```
 
+## Templates
+
+### JustProgress
+
+```
+00:00:23  418/1337 [==========>                      ] Memory[00.12%]:  15659904/134217728
+```
+
+### Simple
+
+```
+.----------------------------------------------------------.
+| 13370/13370 [==========================================] |
++----------------------------------------------------------+
+| 0 is your lucky number!                                  |
+| 777 is your lucky number!                                |
+| 1554 is your lucky number!                               |
+| 2331 is your lucky number!                               |
+| 3108 is your lucky number!                               |
+| 3885 is your lucky number!                               |
+| 4662 is your lucky number!                               |
+| 5439 is your lucky number!                               |
+| 6216 is your lucky number!                               |
+| 6993 is your lucky number!                               |
+| 7770 is your lucky number!                               |
+| 8547 is your lucky number!                               |
+| 9324 is your lucky number!                               |
+| 10101 is your lucky number!                              |
+| 10878 is your lucky number!                              |
+| 11655 is your lucky number!                              |
+| 12432 is your lucky number!                              |
+| 13209 is your lucky number!                              |
+'----------------------------------------------------------'
+```
+
+## Create your own template
+
+Templates are easy to create, have a look at the [official ones](src/Template/Templates).
+
+[//]: # (I should create a wiki page for templating)
+
 ## Demo
 
 ### Keeping it simple
@@ -68,5 +110,3 @@ while (true) {
 ![](readme/3.gif)
 
 ## Templates
-
-Templates are easy to create, have a look at the [official ones](src/Template/Templates).
