@@ -6,7 +6,8 @@ AWDY
 
 ![](https://github.com/RobertWesner/awdy/actions/workflows/tests.yml/badge.svg)
 ![](https://raw.githubusercontent.com/RobertWesner/awdy/image-data/coverage.svg)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../../raw/main/LICENSE.txt)
+![](https://img.shields.io/github/v/release/RobertWesner/awdy)
+[![License: MIT](https://img.shields.io/github/license/RobertWesner/awdy)](../../raw/main/LICENSE.txt)
 
 </div>
 
@@ -108,5 +109,3 @@ Templates are easy to create, have a look at the [official ones](src/Template/Te
 ### Always with dynamic size
 
 ![](readme/3.gif)
-
-## Templates
