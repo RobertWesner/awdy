@@ -8,8 +8,8 @@ use PhpCodeMinifier\MinifierFactory;
 
 require __DIR__ . '/vendor/autoload.php';
 
-// TODO: change to static call once my pull request gets accepted
-$minifier = (new MinifierFactory())->create();
+// TODO: enable minfying once this passes: https://github.com/alexandrmazur96/php-code-minifier/pull/3
+//$minifier = MinifierFactory::create();
 
 function getFiles(string $directory): array
 {
@@ -28,10 +28,13 @@ function getFiles(string $directory): array
 
 $minified = '';
 foreach (getFiles(__DIR__ . '/src') as $file) {
-    // TODO: error handling
-    $minified .= substr($minifier->minifyString($file), 6);
-}
+    $content = file_get_contents($file);
+//    $content = $minifier->minifyString($file);
 
-// TODO: enable dist output once heredoc/nowdoc are minified correctly
-//file_put_contents(__DIR__ . '/dist/AWDY.php', '<?php ' . $minified);
-file_put_contents(__DIR__ . '/dist/AWDY.php', '<?php die(\'WIP\');');
+    $content = preg_replace('/declare\s*\(\s*strict_types\s*=\s*\d+\s*\)\s*;?/', '', $content);
+
+    $minified .= substr($content, 6);
+}
+$minified = preg_replace('/namespace\s*(.*?)\s*;(.*?)(?=namespace|$)/s', 'namespace $1{$2}', $minified);
+
+file_put_contents(__DIR__ . '/dist/AWDY.php', '<?php /** @noinspection ALL */ ' . $minified);
