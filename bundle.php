@@ -6,9 +6,6 @@ use PhpCodeMinifier\MinifierFactory;
 
 require __DIR__ . '/vendor/autoload.php';
 
-// TODO: enable minfying once this passes: https://github.com/alexandrmazur96/php-code-minifier/pull/3
-//$minifier = MinifierFactory::create();
-
 function getFiles(string $directory): array
 {
     $results = [];
@@ -24,15 +21,19 @@ function getFiles(string $directory): array
     return $results;
 }
 
+$minifier = MinifierFactory::create();
 $minified = '';
 foreach (getFiles(__DIR__ . '/src') as $file) {
-    $content = file_get_contents($file);
-//    $content = $minifier->minifyString($file);
-
-    $content = preg_replace('/declare\s*\(\s*strict_types\s*=\s*\d+\s*\)\s*;?/', '', $content);
-
-    $minified .= substr($content, 6);
+    $minified .= substr(
+        preg_replace(
+            '/declare\s*\(\s*strict_types\s*=\s*\d+\s*\)\s*;?/',
+            '',
+            $minifier->minifyFile($file),
+        ),
+        6,
+    );
 }
 $minified = preg_replace('/namespace\s*(.*?)\s*;(.*?)(?=namespace|$)/s', 'namespace $1{$2}', $minified);
 
+mkdir(__DIR__ . '/dist', recursive: true);
 file_put_contents(__DIR__ . '/dist/AWDY.php', '<?php /** @noinspection ALL */ ' . $minified);

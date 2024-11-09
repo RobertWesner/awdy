@@ -19,7 +19,7 @@
         "php": "^8.2"
     },
     "require-dev": {
-        "php-code-minifier/php-code-minifier": "^1.1.0",
+        "php-code-minifier/php-code-minifier": "^1.2.3",
         "phpunit/phpunit": "^11.3.1",
         "squizlabs/php_codesniffer": "^3.10.2"
     },
