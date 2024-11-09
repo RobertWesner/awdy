@@ -100,5 +100,45 @@ final class AWDYTest extends BaseTestCase
         
           100/100 [==========================================]
         EOF, $this->renderAwdyOutput(ob_get_clean()));
+
+        ob_start();
+        AWDY::echo('!', PHP_EOL);
+        self::assertSame(<<<EOF
+        
+          test!                                               
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+        EOF, $this->renderAwdyOutput(ob_get_clean()));
+
+        ob_start();
+        AWDY::printf('A number: %d' . PHP_EOL, 1337);
+        self::assertSame(<<<EOF
+        
+          test!                                               
+          A number: 1337                                      
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              
+        EOF, $this->renderAwdyOutput(ob_get_clean()));
     }
 }
