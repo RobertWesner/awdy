@@ -24,12 +24,12 @@ AWDY
 ### Composer (preferred)
 
 ```bash
-composer require robertwesner/awdy "*"
+composer require robertwesner/awdy
 ```
 
 ### Single file download
 
-1) Download [/dist/AWDY.php](../../raw/main/dist/AWDY.php).
+1) Download [/dist/AWDY.php](https://github.com/RobertWesner/awdy/releases/latest/download/AWDY.php).
 2) Include the bundled file in your script:
 ```php
 require __DIR__ . '/AWDY.php';
@@ -41,7 +41,7 @@ If you wish to not use composer or manually download a file, you can add followi
 
 ```php
 $awdyPath = tempnam(sys_get_temp_dir(), 'awdy_');
-file_put_contents($awdyPath, fopen('https://raw.githubusercontent.com/RobertWesner/awdy/main/dist/AWDY.php', 'r'));
+file_put_contents($awdyPath, fopen('https://github.com/RobertWesner/awdy/releases/latest/download/AWDY.php', 'r'));
 require $awdyPath;
 ```
 

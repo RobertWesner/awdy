@@ -60,9 +60,9 @@ final class AWDY
     /**
      * Print to the Template.
      */
-    public static function echo(string $echo): void
+    public static function echo(string ...$echo): void
     {
-        self::$template->handleEcho($echo);
+        self::$template->handleEcho(implode('', $echo));
         self::render();
     }
 
