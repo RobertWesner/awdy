@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace RobertWesner\AWDY;
 
+use RobertWesner\AWDY\Template\Area;
 use RobertWesner\AWDY\Template\TemplateInterface;
 
 final class AWDY
@@ -36,6 +37,9 @@ final class AWDY
 
             self::$previousWidth = $width;
             self::$previousHeight = $height;
+
+            // mark all as dirty on resize so everything will be properly rendered again
+            array_map(fn (Area $area) => $area->dirty(), self::$template->getAreas());
         }
 
         foreach (self::$template->getAreas() as $area) {

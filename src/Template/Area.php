@@ -47,11 +47,16 @@ class Area
 
         $y = $this->y1;
         if ($y < 0) {
-            $y = $screenHeight + $y;
+            $y += $screenHeight;
+        }
+
+        $x = $this->x1;
+        if ($x < 0) {
+            $x += $screenWidth;
         }
 
         foreach (explode(PHP_EOL, (string)$buffer) as $line) {
-            echo AnsiEscape::moveTo($this->x1, $y), $line;
+            echo AnsiEscape::moveTo($x, $y), $line;
 
             $y++;
         }
