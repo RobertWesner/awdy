@@ -83,4 +83,12 @@ final class AWDY
         self::$template->handleProgress($progress, $current, $total);
         self::render();
     }
+
+    /**
+     * If you so wish as to clear the screen after being done.
+     */
+    public static function clear(): void
+    {
+        echo AnsiEscape::clear();
+    }
 }
