@@ -5,12 +5,14 @@ namespace RobertWesner\AWDY\Tests\Template;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use RobertWesner\AWDY\AnsiEscape;
+use RobertWesner\AWDY\AWDY;
 use RobertWesner\AWDY\Template\Area;
 use RobertWesner\AWDY\Template\Buffer;
 use RobertWesner\AWDY\Tests\BaseTestCase;
 
 #[CoversClass(Area::class)]
 #[UsesClass(Buffer::class)]
+#[UsesClass(AWDY::class)]
 final class AreaTest extends BaseTestCase
 {
     private string $changingValue = 'Hello';
