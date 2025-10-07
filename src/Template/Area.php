@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace RobertWesner\AWDY\Template;
 
 use RobertWesner\AWDY\AnsiEscape;
+use RobertWesner\AWDY\AWDY;
 
 class Area
 {
@@ -56,7 +57,7 @@ class Area
         }
 
         foreach (explode(PHP_EOL, (string)$buffer) as $line) {
-            echo AnsiEscape::moveTo($x, $y), $line;
+            AWDY::__out(AnsiEscape::moveTo($x, $y) . $line);
 
             $y++;
         }
